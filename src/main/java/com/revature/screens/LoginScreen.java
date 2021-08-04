@@ -9,7 +9,6 @@ public class LoginScreen extends Screen {
 
     public LoginScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger) {
         super("LoginScreen", "/login", consoleReader, router, logger);
-        System.out.println("Login");
     }
 
     @Override
@@ -20,7 +19,8 @@ public class LoginScreen extends Screen {
         System.out.print("Password: ");
         String password = consoleReader.readLine();
 
-        System.out.println("Welcome, " + username);
+        System.out.println("Your username is: " + username);
+        System.out.println("Your password is: " + password);
 
         router.navigate("/welcome");
     }

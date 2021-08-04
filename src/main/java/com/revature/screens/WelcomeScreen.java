@@ -31,7 +31,7 @@ public class WelcomeScreen extends Screen {
                 break;
             case "2":
             case "register":
-                System.out.println("Register selected");
+                router.navigate("/register");
                 break;
             case "3":
             case "exit":
