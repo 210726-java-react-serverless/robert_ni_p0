@@ -9,4 +9,7 @@
 *.iml
 
 # Build folder
-target/ 
+target/
+
+# Property files
+*.properties
