@@ -1,8 +1,10 @@
 package com.revature.utils;
 
+import com.revature.repositories.UserRepository;
 import com.revature.screens.LoginScreen;
 import com.revature.screens.RegisterScreen;
 import com.revature.screens.WelcomeScreen;
+import com.revature.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,11 +21,14 @@ public class AppState {
     private AppState() {
         running = true;
         router = new ScreenRouter();
+
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        UserRepository userRepository = new UserRepository();
+        UserService userService = new UserService(userRepository);
 
         router.addScreen(new WelcomeScreen(consoleReader, router))
-                .addScreen(new LoginScreen(consoleReader, router, logger))
-                .addScreen(new RegisterScreen(consoleReader, router, logger));
+                .addScreen(new LoginScreen(consoleReader, router, logger, userService))
+                .addScreen(new RegisterScreen(consoleReader, router, logger, userService));
     }
 
     public static AppState getAppState() {

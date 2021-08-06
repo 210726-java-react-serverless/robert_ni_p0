@@ -1,15 +1,22 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AppUser {
 
-    private int id;
+    private String id;
     private String firstname;
     private String lastname;
     private String email;
     private String username;
     private String password;
+
+    public AppUser() {
+        super();
+    }
 
     public AppUser(String firstname, String lastname, String email, String username, String password) {
         this.firstname = firstname;
@@ -19,16 +26,16 @@ public class AppUser {
         this.password = password;
     }
 
-    public AppUser(int id, String firstname, String lastname, String email, String username, String password) {
+    public AppUser(String id, String firstname, String lastname, String email, String username, String password) {
         this(firstname, lastname, email, username, password);
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,14 +1,19 @@
 package com.revature.screens;
 
+import com.revature.models.AppUser;
+import com.revature.services.UserService;
 import com.revature.utils.ScreenRouter;
+import com.revature.utils.exceptions.AuthenticationException;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 
 public class LoginScreen extends Screen {
 
-    public LoginScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger) {
+    private final UserService userService;
+    public LoginScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger, UserService userService) {
         super("LoginScreen", "/login", consoleReader, router, logger);
+        this.userService = userService;
     }
 
     @Override
@@ -19,9 +24,15 @@ public class LoginScreen extends Screen {
         System.out.print("Password: ");
         String password = consoleReader.readLine();
 
-        System.out.println("Your username is: " + username);
-        System.out.println("Your password is: " + password);
+        try {
+            AppUser authUser = userService.login(username, password);
+            System.out.println("Logged in as: " + authUser.getUsername());
+            router.navigate("/student");
 
-        router.navigate("/welcome");
+        } catch (AuthenticationException ae) {
+            System.out.println("No user found with provided credentials");
+            System.out.println("Navigating back to welcome screen...");
+            router.navigate("/welcome");
+        }
     }
 }

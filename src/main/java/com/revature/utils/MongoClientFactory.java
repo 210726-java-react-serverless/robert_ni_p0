@@ -6,7 +6,6 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.revature.utils.exceptions.DataSourceException;
-import com.revature.utils.exceptions.ResourcePersistenceException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,7 +17,7 @@ import java.util.Properties;
 public class MongoClientFactory {
 
     private static final MongoClientFactory MONGO_CLIENT_FACTORY = new MongoClientFactory();
-    private MongoClient client = null;
+    private MongoClient client;
 
     private MongoClientFactory() {
 
@@ -46,18 +45,16 @@ public class MongoClientFactory {
             client = MongoClients.create(settings);
 
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            throw new DataSourceException("Unable to load property file.", e);
+            throw new DataSourceException("Unable to load property file", e);
 
         } catch (IOException e) {
-            e.printStackTrace();
             throw new DataSourceException("Unexpected error occurred", e);
         }
 
     }
 
     public static MongoClientFactory getInstance() {
-        return (MONGO_CLIENT_FACTORY == null ? new MongoClientFactory() : MONGO_CLIENT_FACTORY);
+        return MONGO_CLIENT_FACTORY;
     }
 
     public MongoClient getClient() {

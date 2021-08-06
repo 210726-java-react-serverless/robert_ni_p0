@@ -1,6 +1,7 @@
 package com.revature.screens;
 
 import com.revature.models.AppUser;
+import com.revature.services.UserService;
 import com.revature.utils.ScreenRouter;
 import org.apache.logging.log4j.Logger;
 
@@ -8,8 +9,11 @@ import java.io.BufferedReader;
 
 public class RegisterScreen extends Screen {
 
-    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger) {
+    private final UserService userService;
+
+    public RegisterScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger, UserService userService) {
         super("RegisterScreen", "/register", consoleReader, router, logger);
+        this.userService = userService;
     }
 
     @Override
@@ -31,7 +35,7 @@ public class RegisterScreen extends Screen {
 
         AppUser newUser = new AppUser(firstname, lastname, email, username, password);
 
-        System.out.println(newUser);
+        userService.register(newUser);
 
         router.navigate("/welcome");
     }
