@@ -30,7 +30,12 @@ public class LoginScreen extends Screen {
         try {
             AppUser authUser = userService.login(username, password);
             System.out.println("Welcome back, " + authUser.getUsername() + "!");
-            router.navigate("/student");
+
+            if (userService.getSession().superPowers()) {
+                router.navigate("/faculty");
+            } else {
+                router.navigate("/student");
+            }
 
         } catch (AuthenticationException ae) {
             System.out.println("No user found with provided credentials");
