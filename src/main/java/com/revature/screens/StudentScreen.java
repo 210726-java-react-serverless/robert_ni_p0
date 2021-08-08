@@ -19,24 +19,22 @@ public class StudentScreen extends Screen {
 
     @Override
     public void render() throws Exception {
-
-        String menu = "\nWhat would you like to do?\n" +
+        String menu = "\nStudent Dashboard\n" +
                 "1) View profile\n" +
                 "2) Logout\n" +
                 "> ";
+
         System.out.print(menu);
 
         String userSelection = consoleReader.readLine();
 
         switch (userSelection) {
             case "2":
-
+                userService.getSession().closeSession();
+                router.navigate("/welcome");
                 break;
             default:
                 System.out.println("This is still a work in progress");
-                System.out.println("Returning to welcome page");
         }
-
-        router.navigate("/welcome");
     }
 }

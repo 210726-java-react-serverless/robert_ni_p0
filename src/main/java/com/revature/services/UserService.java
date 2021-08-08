@@ -16,6 +16,10 @@ public class UserService {
         this.session = session;
     }
 
+    public UserSession getSession() {
+        return session;
+    }
+
     public AppUser register(AppUser newUser) {
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid user data provided");
