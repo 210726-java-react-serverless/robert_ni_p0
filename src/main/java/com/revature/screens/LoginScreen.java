@@ -10,9 +10,12 @@ import java.io.BufferedReader;
 
 public class LoginScreen extends Screen {
 
+    private final Logger logger;
     private final UserService userService;
+
     public LoginScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger, UserService userService) {
-        super("LoginScreen", "/login", consoleReader, router, logger);
+        super("LoginScreen", "/login", consoleReader, router);
+        this.logger = logger;
         this.userService = userService;
     }
 
@@ -26,7 +29,7 @@ public class LoginScreen extends Screen {
 
         try {
             AppUser authUser = userService.login(username, password);
-            System.out.println("Logged in as: " + authUser.getUsername());
+            System.out.println("Welcome back, " + authUser.getUsername() + "!");
             router.navigate("/student");
 
         } catch (AuthenticationException ae) {

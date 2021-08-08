@@ -9,10 +9,12 @@ import java.io.BufferedReader;
 
 public class RegisterScreen extends Screen {
 
+    private final Logger logger;
     private final UserService userService;
 
     public RegisterScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger, UserService userService) {
-        super("RegisterScreen", "/register", consoleReader, router, logger);
+        super("RegisterScreen", "/register", consoleReader, router);
+        this.logger = logger;
         this.userService = userService;
     }
 

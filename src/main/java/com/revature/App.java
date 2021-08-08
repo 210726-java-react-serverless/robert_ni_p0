@@ -8,4 +8,5 @@ public class App {
         AppState app = AppState.getAppState();
         app.start();
     }
+
 }
