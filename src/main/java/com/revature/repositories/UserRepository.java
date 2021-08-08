@@ -51,6 +51,11 @@ public class UserRepository implements CrudRepository<AppUser> {
         return null;
     }
 
+    @Override
+    public AppUser delete(AppUser deleteResource) {
+        return null;
+    }
+
     public AppUser findUserByCredentials(String username, String password) {
 
         try {
@@ -72,9 +77,11 @@ public class UserRepository implements CrudRepository<AppUser> {
             return authUser;
 
         } catch (JsonMappingException e) {
+            System.out.println(e.getMessage()); // TODO logger
             throw new DataSourceException("An exception occurred while mapping the document", e);
 
         } catch (Exception e) {
+            System.out.println(e.getMessage()); // TODO logger
             throw new DataSourceException("An unexpected error occurred", e);
         }
     }
