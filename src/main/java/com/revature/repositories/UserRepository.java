@@ -1,6 +1,5 @@
 package com.revature.repositories;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,11 +29,14 @@ public class UserRepository implements CrudRepository<AppUser> {
             MongoDatabase database = client.getDatabase("p0");
             MongoCollection<Document> collection = database.getCollection("users");
 
+            newUser.setUserType("student");
+
             Document newUserDoc = new Document("firstname", newUser.getFirstname())
                     .append("lastname", newUser.getLastname())
                     .append("email", newUser.getEmail())
                     .append("username", newUser.getUsername())
-                    .append("password", newUser.getPassword());
+                    .append("password", newUser.getPassword())
+                    .append("userType", newUser.getUserType());
 
             collection.insertOne(newUserDoc);
             newUser.setId(newUserDoc.get("_id").toString());

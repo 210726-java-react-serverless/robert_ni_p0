@@ -18,6 +18,10 @@ public class UserSession {
         return currentUser != null;
     }
 
+    public boolean superPowers() {
+        return (currentUser.getUserType().equals("faculty"));
+    }
+
     public void closeSession() {
         setCurrentUser(null);
     }

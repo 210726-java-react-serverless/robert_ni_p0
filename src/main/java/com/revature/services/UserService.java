@@ -24,7 +24,6 @@ public class UserService {
         if (!isUserValid(newUser)) {
             throw new InvalidRequestException("Invalid user data provided");
         }
-
         return userRepository.save(newUser);
     }
 
