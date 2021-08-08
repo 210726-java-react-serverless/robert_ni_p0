@@ -1,9 +1,7 @@
 package com.revature.utils;
 
 import com.revature.repositories.UserRepository;
-import com.revature.screens.LoginScreen;
-import com.revature.screens.RegisterScreen;
-import com.revature.screens.WelcomeScreen;
+import com.revature.screens.*;
 import com.revature.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,12 +21,15 @@ public class AppState {
         router = new ScreenRouter();
 
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        UserSession session = new UserSession();
         UserRepository userRepository = new UserRepository();
-        UserService userService = new UserService(userRepository);
+        UserService userService = new UserService(userRepository, session);
 
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader, router, logger, userService))
-                .addScreen(new RegisterScreen(consoleReader, router, logger, userService));
+                .addScreen(new RegisterScreen(consoleReader, router, logger, userService))
+                .addScreen(new StudentScreen(consoleReader, router, logger, userService))
+                .addScreen(new FacultyScreen(consoleReader, router, logger, userService));
     }
 
     public static AppState getAppState() {
@@ -44,5 +45,9 @@ public class AppState {
                 logger.error(e.getMessage());
             }
         }
+    }
+
+    public void stop() {
+        running = false;
     }
 }

@@ -2,15 +2,18 @@ package com.revature.services;
 
 import com.revature.models.AppUser;
 import com.revature.repositories.UserRepository;
+import com.revature.utils.UserSession;
 import com.revature.utils.exceptions.AuthenticationException;
 import com.revature.utils.exceptions.InvalidRequestException;
 
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserSession session;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserSession session) {
         this.userRepository = userRepository;
+        this.session = session;
     }
 
     public AppUser register(AppUser newUser) {
@@ -32,7 +35,14 @@ public class UserService {
             throw new AuthenticationException("Invalid credentials provided");
         }
 
+        session.setCurrentUser(authUser);
+
         return authUser;
+    }
+
+    public AppUser getProfile(AppUser authUser) {
+        // return information about a user
+        return null;
     }
 
     public boolean isUserValid(AppUser user) {
