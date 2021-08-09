@@ -1,6 +1,6 @@
 package com.revature.screens;
 
-import com.revature.models.AppUser;
+import com.revature.datasource.models.AppUser;
 import com.revature.services.UserService;
 import com.revature.utils.ScreenRouter;
 import com.revature.utils.exceptions.AuthenticationException;

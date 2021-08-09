@@ -1,6 +1,6 @@
 package com.revature.utils;
 
-import com.revature.models.AppUser;
+import com.revature.datasource.models.AppUser;
 
 public class UserSession {
 

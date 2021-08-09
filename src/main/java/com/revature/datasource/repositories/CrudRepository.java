@@ -1,4 +1,4 @@
-package com.revature.repositories;
+package com.revature.datasource.repositories;
 
 public interface CrudRepository<T> {
 

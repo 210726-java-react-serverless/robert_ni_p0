@@ -1,10 +1,10 @@
-package com.revature.repositories;
+package com.revature.datasource.repositories;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.revature.models.Course;
-import com.revature.utils.MongoClientFactory;
+import com.revature.datasource.models.Course;
+import com.revature.datasource.utils.MongoClientFactory;
 import com.revature.utils.exceptions.DataSourceException;
 import org.bson.Document;
 

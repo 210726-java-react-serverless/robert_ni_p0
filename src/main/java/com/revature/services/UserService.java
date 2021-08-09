@@ -1,7 +1,7 @@
 package com.revature.services;
 
-import com.revature.models.AppUser;
-import com.revature.repositories.UserRepository;
+import com.revature.datasource.models.AppUser;
+import com.revature.datasource.repositories.UserRepository;
 import com.revature.utils.UserSession;
 import com.revature.utils.exceptions.AuthenticationException;
 import com.revature.utils.exceptions.InvalidRequestException;

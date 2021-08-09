@@ -1,4 +1,4 @@
-package com.revature.models;
+package com.revature.datasource.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

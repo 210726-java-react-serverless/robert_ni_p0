@@ -1,6 +1,6 @@
 package com.revature.screens;
 
-import com.revature.models.Course;
+import com.revature.datasource.models.Course;
 import com.revature.services.CourseService;
 import com.revature.services.UserService;
 import com.revature.utils.ScreenRouter;

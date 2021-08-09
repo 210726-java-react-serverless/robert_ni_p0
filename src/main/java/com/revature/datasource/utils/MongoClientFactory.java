@@ -1,4 +1,4 @@
-package com.revature.utils;
+package com.revature.datasource.utils;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoCredential;

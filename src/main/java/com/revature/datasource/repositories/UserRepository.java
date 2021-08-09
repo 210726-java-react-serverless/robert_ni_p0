@@ -1,4 +1,4 @@
-package com.revature.repositories;
+package com.revature.datasource.repositories;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,9 +7,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import com.revature.models.AppUser;
+import com.revature.datasource.models.AppUser;
 
-import com.revature.utils.MongoClientFactory;
+import com.revature.datasource.utils.MongoClientFactory;
 import com.revature.utils.exceptions.DataSourceException;
 
 import org.bson.Document;

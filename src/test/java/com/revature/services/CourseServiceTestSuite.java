@@ -1,7 +1,7 @@
 package com.revature.services;
 
-import com.revature.models.Course;
-import com.revature.repositories.CourseRepository;
+import com.revature.datasource.models.Course;
+import com.revature.datasource.repositories.CourseRepository;
 import com.revature.utils.exceptions.InvalidRequestException;
 import org.junit.After;
 import org.junit.Assert;

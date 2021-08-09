@@ -1,7 +1,7 @@
 package com.revature.utils;
 
-import com.revature.repositories.CourseRepository;
-import com.revature.repositories.UserRepository;
+import com.revature.datasource.repositories.CourseRepository;
+import com.revature.datasource.repositories.UserRepository;
 import com.revature.screens.*;
 import com.revature.services.CourseService;
 import com.revature.services.UserService;
