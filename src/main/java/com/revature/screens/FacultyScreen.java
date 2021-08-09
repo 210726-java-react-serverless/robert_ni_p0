@@ -53,7 +53,14 @@ public class FacultyScreen extends Screen {
                 Course newCourse = new Course(courseId, courseName, courseDesc, regOpen);
 
                 try {
-                    courseService.addCourse(newCourse);
+                    newCourse = courseService.addCourse(newCourse);
+
+                    if (newCourse == null) {
+                        System.out.println("The course was not added");
+                    } else {
+                        System.out.println("\"" + newCourse.getCourseName() + "\" successfully added!");
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -63,7 +70,12 @@ public class FacultyScreen extends Screen {
                 courseId = consoleReader.readLine();
 
                 try {
-                    courseService.deleteCourse(courseId);
+                    boolean result = courseService.deleteCourse(courseId);
+                    if (result) {
+                        System.out.println("The course has been successfully removed");
+                    } else {
+                        System.out.println("There was no course with that id found");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
