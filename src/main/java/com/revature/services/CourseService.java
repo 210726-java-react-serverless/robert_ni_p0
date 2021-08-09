@@ -19,6 +19,10 @@ public class CourseService {
         return courseRepository.save(newCourse);
     }
 
+    public boolean deleteCourse(String courseId) {
+        return courseRepository.delete(courseId);
+    }
+
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseId() == null || course.getCourseId().trim().equals("")) return false;

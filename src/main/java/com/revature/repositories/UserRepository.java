@@ -54,8 +54,8 @@ public class UserRepository implements CrudRepository<AppUser> {
     }
 
     @Override
-    public AppUser delete(AppUser deleteResource) {
-        return null;
+    public boolean delete(String username) {
+        return false;
     }
 
     public AppUser findUserByCredentials(String username, String password) {

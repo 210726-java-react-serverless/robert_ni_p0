@@ -45,8 +45,25 @@ public class CourseRepository implements CrudRepository<Course> {
     }
 
     @Override
-    public Course delete(Course deleteResource) {
-        return null;
-    }
+    public boolean delete(String courseId) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("courses");
 
+            Document queryDoc = new Document("courseId", courseId);
+            Document removeDoc = collection.find(queryDoc).first();
+
+            if (removeDoc == null) {
+                return false;
+            }
+
+            collection.deleteOne(removeDoc);
+
+            return true;
+
+        } catch (Exception e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
+    }
 }

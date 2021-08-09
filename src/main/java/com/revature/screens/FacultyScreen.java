@@ -25,26 +25,30 @@ public class FacultyScreen extends Screen {
     public void render() throws Exception {
         String menu = "\nFaculty Dashboard\n" +
                 "1) Add new course\n" +
-                "2) View courses\n" +
+                "2) Delete course by id\n" +
                 "3) Logout\n" +
                 "> ";
 
         System.out.print(menu);
         String userSelection = consoleReader.readLine();
 
+        String courseId;
+        String courseName;
+        String courseDesc;
+        String regOpen;
         switch (userSelection) {
             case "1":
                 System.out.print("Course ID: ");
-                String courseId = consoleReader.readLine();
+                courseId = consoleReader.readLine();
 
                 System.out.print("Course Name: ");
-                String courseName = consoleReader.readLine();
+                courseName = consoleReader.readLine();
 
                 System.out.print("Course description: ");
-                String courseDesc = consoleReader.readLine();
+                courseDesc = consoleReader.readLine();
 
                 System.out.print("Is this course open for registration? (Y/N): ");
-                String regOpen = consoleReader.readLine();
+                regOpen = consoleReader.readLine();
 
                 Course newCourse = new Course(courseId, courseName, courseDesc, regOpen);
 
@@ -53,7 +57,16 @@ public class FacultyScreen extends Screen {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case "2":
+                System.out.print("What is the id of the course you'd like to delete?\n> ");
+                courseId = consoleReader.readLine();
 
+                try {
+                    courseService.deleteCourse(courseId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case "3":
                 userService.getSession().closeSession();
