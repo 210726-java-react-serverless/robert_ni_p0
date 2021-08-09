@@ -44,11 +44,9 @@ public class CourseService {
         try {
             courses = courseRepository.findAllCourses();
             for (Course course : courses) {
-                System.out.println("Course ID: " + course.getCourseId() +
-                        "\nCourse Name: " + course.getCourseName() +
-                        "\nCourse Description: " + course.getCourseDesc() +
-                        "\nRegistration available? " + course.getRegisterOpen() +
-                        "\n------------------------------------------------------------"
+                displayCourse(course);
+                System.out.print("Registration available? " + course.getRegisterOpen() +
+                        "\n------------------------------------------------------------\n"
                 );
             }
         } catch (Exception e) {
@@ -61,16 +59,35 @@ public class CourseService {
             courses = courseRepository.findAllCourses();
             for (Course course : courses) {
                 if (course.getRegisterOpen().equals("Yes")) {
-                    System.out.println("Course ID: " + course.getCourseId() +
-                            "\nCourse Name: " + course.getCourseName() +
-                            "\nCourse Description: " + course.getCourseDesc() +
-                            "\n------------------------------------------------------------"
-                    );
+                    displayCourse(course);
+                    System.out.print("\n------------------------------------------------------------\n");
                 }
             }
         } catch (Exception e) {
             throw new DataSourceException("An unexpected error occurred", e);
         }
+    }
+
+    public void findClosedCourses() {
+        List<Course> courses;
+        try {
+            courses = courseRepository.findAllCourses();
+            for (Course course : courses) {
+                if (course.getRegisterOpen().equals("No")) {
+                    displayCourse(course);
+                    System.out.print("\n------------------------------------------------------------\n");
+                }
+            }
+        } catch (Exception e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
+    }
+
+    public void displayCourse(Course course) {
+        System.out.println("Course ID: " + course.getCourseId() +
+                "\nCourse Name: " + course.getCourseName() +
+                "\nCourse Description: " + course.getCourseDesc()
+        );
     }
 
     public boolean isCourseValid(Course course) {
