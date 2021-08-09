@@ -21,7 +21,8 @@ public class StudentScreen extends Screen {
     public void render() throws Exception {
         String menu = "\nStudent Dashboard\n" +
                 "1) View profile\n" +
-                "2) Logout\n" +
+                "2) Add a course\n" +
+                "3) Logout\n" +
                 "> ";
 
         System.out.print(menu);
@@ -29,7 +30,7 @@ public class StudentScreen extends Screen {
         String userSelection = consoleReader.readLine();
 
         switch (userSelection) {
-            case "2":
+            case "3":
                 userService.getSession().closeSession();
                 router.navigate("/welcome");
                 break;

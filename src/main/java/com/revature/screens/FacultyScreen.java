@@ -26,6 +26,7 @@ public class FacultyScreen extends Screen {
         String menu = "\nFaculty Dashboard\n" +
                 "1) Add new course\n" +
                 "2) View courses\n" +
+                "3) Logout\n" +
                 "> ";
 
         System.out.print(menu);
@@ -33,10 +34,19 @@ public class FacultyScreen extends Screen {
 
         switch (userSelection) {
             case "1":
+                System.out.print("Course ID: ");
+                String courseId = consoleReader.readLine();
+
                 System.out.print("Course Name: ");
                 String courseName = consoleReader.readLine();
 
-                Course newCourse = new Course(courseName);
+                System.out.print("Course description: ");
+                String courseDesc = consoleReader.readLine();
+
+                System.out.print("Is this course open for registration? (Y/N): ");
+                String regOpen = consoleReader.readLine();
+
+                Course newCourse = new Course(courseId, courseName, courseDesc, regOpen);
 
                 try {
                     courseService.addCourse(newCourse);
@@ -45,7 +55,7 @@ public class FacultyScreen extends Screen {
                 }
 
                 break;
-            case "2":
+            case "3":
                 userService.getSession().closeSession();
                 router.navigate("/welcome");
                 break;

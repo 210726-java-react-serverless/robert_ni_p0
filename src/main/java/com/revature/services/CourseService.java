@@ -21,6 +21,9 @@ public class CourseService {
 
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
-        return course.getCourseName() != null && !course.getCourseName().trim().equals("");
+        if (course.getCourseId() == null || course.getCourseId().trim().equals("")) return false;
+        if (course.getCourseName() == null || course.getCourseName().trim().equals("")) return false;
+        if (course.getRegOpen() == null || course.getRegOpen().trim().equals("")) return false;
+        return course.getRegOpen().trim().equals("Y") || course.getRegOpen().trim().equals("N");
     }
 }

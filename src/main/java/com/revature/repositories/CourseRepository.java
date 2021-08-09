@@ -23,7 +23,10 @@ public class CourseRepository implements CrudRepository<Course> {
             MongoDatabase database = client.getDatabase("p0");
             MongoCollection<Document> collection = database.getCollection("courses");
 
-            Document newCourseDoc = new Document("courseName", newCourse.getCourseName());
+            Document newCourseDoc = new Document("courseId", newCourse.getCourseId())
+                    .append("courseName", newCourse.getCourseName())
+                    .append("courseDesc", newCourse.getCourseDesc())
+                    .append("regOpen", newCourse.getRegOpen());
 
             collection.insertOne(newCourseDoc);
 
