@@ -11,21 +11,21 @@ public class Course {
     private String courseId;
     private String courseName;
     private String courseDesc;
-    private String regOpen;
+    private String registerOpen;
 
     public Course() {
         super();
     }
 
-    public Course(String courseId, String courseName, String courseDesc, String regOpen) {
+    public Course(String courseId, String courseName, String courseDesc, String registerOpen) {
         this.courseId = courseId;
         this.courseName = courseName;
         this.courseDesc = courseDesc;
-        this.regOpen = regOpen;
+        this.registerOpen = registerOpen;
     }
 
-    public Course(String id, String courseId, String courseName, String courseDesc, String regOpen) {
-        this(courseId, courseName, courseDesc, regOpen);
+    public Course(String id, String courseId, String courseName, String courseDesc, String registerOpen) {
+        this(courseId, courseName, courseDesc, registerOpen);
         this.id = id;
     }
 
@@ -61,12 +61,12 @@ public class Course {
         this.courseDesc = courseDesc;
     }
 
-    public String getRegOpen() {
-        return regOpen;
+    public String getRegisterOpen() {
+        return registerOpen;
     }
 
-    public void setRegOpen(String regOpen) {
-        this.regOpen = regOpen;
+    public void setRegisterOpen(String registerOpen) {
+        this.registerOpen = registerOpen;
     }
 
     @Override
@@ -77,12 +77,12 @@ public class Course {
         return Objects.equals(id, course.id) && Objects.equals(courseId, course.courseId)
                 && Objects.equals(courseName, course.courseName)
                 && Objects.equals(courseDesc, course.courseDesc)
-                && Objects.equals(regOpen, course.regOpen);
+                && Objects.equals(registerOpen, course.registerOpen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, courseId, courseName, courseDesc, regOpen);
+        return Objects.hash(id, courseId, courseName, courseDesc, registerOpen);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class Course {
                 ", courseId='" + courseId + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", courseDesc='" + courseDesc + '\'' +
-                ", regOpen='" + regOpen + '\'' +
+                ", registerOpen='" + registerOpen + '\'' +
                 '}';
     }
 }

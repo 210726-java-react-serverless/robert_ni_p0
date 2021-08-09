@@ -33,7 +33,7 @@ public class CourseRepository implements CrudRepository<Course> {
             Document newCourseDoc = new Document("courseId", newCourse.getCourseId())
                     .append("courseName", newCourse.getCourseName())
                     .append("courseDesc", newCourse.getCourseDesc())
-                    .append("regOpen", newCourse.getRegOpen());
+                    .append("registerOpen", newCourse.getRegisterOpen());
 
             collection.insertOne(newCourseDoc);
 
@@ -74,7 +74,7 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
-    public List<Course> findOpenCourses() {
+    public List<Course> findAllCourses() {
         List<Course> courses = new ArrayList<>();
 
         try {

@@ -1,5 +1,6 @@
 package com.revature.screens;
 
+import com.revature.utils.AppState;
 import com.revature.utils.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -36,7 +37,7 @@ public class WelcomeScreen extends Screen {
             case "3":
             case "exit":
                 System.out.println("Exit selected");
-                System.exit(0);
+                AppState.getAppState().stop();
                 break;
             default:
                 System.out.println("Invalid entry selected");

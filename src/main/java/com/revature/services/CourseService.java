@@ -19,7 +19,17 @@ public class CourseService {
         if (!isCourseValid(newCourse)) {
             throw new InvalidRequestException("Invalid course data provided");
         }
+        newCourse = convertRegisterOpen(newCourse);
         return courseRepository.save(newCourse);
+    }
+
+    public Course convertRegisterOpen(Course course) {
+        if (course.getRegisterOpen().equals("Y")) {
+            course.setRegisterOpen("Yes");
+        } else {
+            course.setRegisterOpen("No");
+        }
+        return course;
     }
 
     public boolean deleteCourse(String courseId) {
@@ -29,12 +39,28 @@ public class CourseService {
         return courseRepository.delete(courseId);
     }
 
+    public void getAllCourses() {
+        List<Course> courses;
+        try {
+            courses = courseRepository.findAllCourses();
+            for (Course course : courses) {
+                System.out.println("Course ID: " + course.getCourseId() +
+                        "\nCourse Name: " + course.getCourseName() +
+                        "\nCourse Description: " + course.getCourseDesc() +
+                        "\nRegistration available? " + course.getRegisterOpen() +
+                        "\n------------------------------------------------------------"
+                );
+            }
+        } catch (Exception e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
+    }
     public void findOpenCourses() {
         List<Course> courses;
         try {
-            courses = courseRepository.findOpenCourses();
+            courses = courseRepository.findAllCourses();
             for (Course course : courses) {
-                if (course.getRegOpen().equals("Y")) {
+                if (course.getRegisterOpen().equals("Yes")) {
                     System.out.println("Course ID: " + course.getCourseId() +
                             "\nCourse Name: " + course.getCourseName() +
                             "\nCourse Description: " + course.getCourseDesc() +
@@ -43,7 +69,7 @@ public class CourseService {
                 }
             }
         } catch (Exception e) {
-            throw new DataSourceException("Could not find courses", e);
+            throw new DataSourceException("An unexpected error occurred", e);
         }
     }
 
@@ -51,8 +77,8 @@ public class CourseService {
         if (course == null) return false;
         if (course.getCourseId() == null || course.getCourseId().trim().equals("")) return false;
         if (course.getCourseName() == null || course.getCourseName().trim().equals("")) return false;
-        if (course.getRegOpen() == null || course.getRegOpen().trim().equals("")) return false;
-        return course.getRegOpen().trim().equals("Y") || course.getRegOpen().trim().equals("N");
+        if (course.getRegisterOpen() == null || course.getRegisterOpen().trim().equals("")) return false;
+        return course.getRegisterOpen().trim().equals("Y") || course.getRegisterOpen().trim().equals("N");
     }
 
     public boolean isCourseIdValid(String courseId) {

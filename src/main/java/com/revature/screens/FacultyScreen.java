@@ -23,69 +23,57 @@ public class FacultyScreen extends Screen {
 
     @Override
     public void render() throws Exception {
+
         String menu = "\nFaculty Dashboard\n" +
-                "1) Add new course\n" +
-                "2) Delete course by id\n" +
-                "3) Logout\n" +
+                "1) View courses\n" +
+                "2) Add a course\n" +
+                "3) Update a course\n" +
+                "4) Remove a course\n" +
+                "5) Logout\n" +
                 "> ";
 
         System.out.print(menu);
+
         String userSelection = consoleReader.readLine();
 
         String courseId;
         String courseName;
         String courseDesc;
-        String regOpen;
+        String registerOpen;
+
         switch (userSelection) {
             case "1":
-                System.out.print("Course ID: ");
-                courseId = consoleReader.readLine();
-
-                System.out.print("Course Name: ");
-                courseName = consoleReader.readLine();
-
-                System.out.print("Course description: ");
-                courseDesc = consoleReader.readLine();
-
-                System.out.print("Is this course open for registration? (Y/N): ");
-                regOpen = consoleReader.readLine();
-
-                Course newCourse = new Course(courseId, courseName, courseDesc, regOpen);
-
-                try {
-                    newCourse = courseService.addCourse(newCourse);
-
-                    if (newCourse == null) {
-                        System.out.println("The course was not added");
-                    } else {
-                        System.out.println("\"" + newCourse.getCourseName() + "\" successfully added!");
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                courseService.getAllCourses();
                 break;
             case "2":
-                System.out.print("What is the id of the course you'd like to delete?\n> ");
+                System.out.print("Enter a course id > ");
                 courseId = consoleReader.readLine();
 
-                try {
-                    boolean result = courseService.deleteCourse(courseId);
-                    if (result) {
-                        System.out.println("The course has been successfully removed");
-                    } else {
-                        System.out.println("There was no course with that id found");
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                System.out.print("Enter a course name > ");
+                courseName = consoleReader.readLine();
+
+                System.out.print("Enter a description > ");
+                courseDesc = consoleReader.readLine();
+
+                System.out.print("Can students register for this class? (Y/N) > ");
+                registerOpen = consoleReader.readLine();
+
+                courseService.addCourse(new Course(courseId, courseName, courseDesc, registerOpen));
                 break;
             case "3":
+                System.out.println("Update a course");
+                break;
+            case "4":
+                System.out.print("Enter the course id of the course you wish to delete > ");
+                courseId = consoleReader.readLine();
+                courseService.deleteCourse(courseId);
+                break;
+            case "5":
                 userService.getSession().closeSession();
                 router.navigate("/welcome");
                 break;
             default:
-                System.out.println("This is still a work in progress!");
+                System.out.println("This is still a work in progress");
         }
     }
 }
