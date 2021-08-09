@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -31,16 +30,16 @@ public class CourseServiceTestSuite {
 
     @Test
     public void isCourseValid_returnsTrue_givenValidCourse() {
-        Course validCourse = new Course("valid");
+        Course validCourse = new Course("valid", "valid", "valid", "Y");
         boolean testResult = sut.isCourseValid(validCourse);
         Assert.assertTrue("Expected course to be considered valid", testResult);
     }
 
     @Test
     public void isCourseValid_returnsFalse_givenInvalidCourse() {
-        Course invalidCourse1 = new Course(null);
-        Course invalidCourse2 = new Course("");
-        Course invalidCourse3 = new Course("                     ");
+        Course invalidCourse1 = new Course(null, "valid", "valid", "Y");
+        Course invalidCourse2 = new Course("", "valid", "valid", "Y");
+        Course invalidCourse3 = new Course("                     ", "valid", "valid", "Y");
 
         boolean testResult1 = sut.isCourseValid(invalidCourse1);
         boolean testResult2 = sut.isCourseValid(invalidCourse2);
@@ -53,8 +52,8 @@ public class CourseServiceTestSuite {
 
     @Test
     public void addCourse_returnsTrue_givenValidCourse() {
-        Course expectedCourse = new Course("valid");
-        Course validCourse = new Course("valid");
+        Course expectedCourse = new Course("valid", "valid", "valid", "Y");
+        Course validCourse = new Course("valid", "valid", "valid", "Y");
 
         when(mockCourseRepository.save(any())).thenReturn(expectedCourse);
 
@@ -66,7 +65,7 @@ public class CourseServiceTestSuite {
 
     @Test(expected = InvalidRequestException.class)
     public void addCourse_throwsException_whenGivenInvalidCourse() {
-        Course invalidCourse = new Course(null);
+        Course invalidCourse = new Course(null, "valid", "valid", "Y");
 
         try {
             sut.addCourse(invalidCourse);
