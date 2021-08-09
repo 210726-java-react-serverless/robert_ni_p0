@@ -24,17 +24,17 @@ public class AppState {
 
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
+        CourseRepository courseRepository = new CourseRepository();
+        CourseService courseService = new CourseService(courseRepository);
+
         UserSession session = new UserSession();
         UserRepository userRepository = new UserRepository();
         UserService userService = new UserService(userRepository, session);
 
-        CourseRepository courseRepository = new CourseRepository();
-        CourseService courseService = new CourseService(courseRepository);
-
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader, router, logger, userService))
                 .addScreen(new RegisterScreen(consoleReader, router, logger, userService))
-                .addScreen(new StudentScreen(consoleReader, router, logger, userService))
+                .addScreen(new StudentScreen(consoleReader, router, logger, userService, courseService))
                 .addScreen(new FacultyScreen(consoleReader, router, logger, userService, courseService));
     }
 

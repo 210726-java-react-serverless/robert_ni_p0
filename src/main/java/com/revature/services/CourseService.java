@@ -2,7 +2,10 @@ package com.revature.services;
 
 import com.revature.datasource.models.Course;
 import com.revature.datasource.repositories.CourseRepository;
+import com.revature.utils.exceptions.DataSourceException;
 import com.revature.utils.exceptions.InvalidRequestException;
+
+import java.util.List;
 
 public class CourseService {
 
@@ -24,6 +27,24 @@ public class CourseService {
             throw new InvalidRequestException("Invalid course id provided");
         }
         return courseRepository.delete(courseId);
+    }
+
+    public void findOpenCourses() {
+        List<Course> courses;
+        try {
+            courses = courseRepository.findOpenCourses();
+            for (Course course : courses) {
+                if (course.getRegOpen().equals("Y")) {
+                    System.out.println("Course ID: " + course.getCourseId() +
+                            "\nCourse Name: " + course.getCourseName() +
+                            "\nCourse Description: " + course.getCourseDesc() +
+                            "\n------------------------------------------------------------"
+                    );
+                }
+            }
+        } catch (Exception e) {
+            throw new DataSourceException("Could not find courses", e);
+        }
     }
 
     public boolean isCourseValid(Course course) {

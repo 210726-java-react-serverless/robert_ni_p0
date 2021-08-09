@@ -43,11 +43,6 @@ public class UserService {
         return authUser;
     }
 
-    public AppUser getProfile(AppUser authUser) {
-        // return information about a user
-        return null;
-    }
-
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;
         if (user.getFirstname() == null || user.getFirstname().trim().equals("")) return false;
