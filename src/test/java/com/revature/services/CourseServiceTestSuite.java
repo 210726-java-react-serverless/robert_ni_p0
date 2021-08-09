@@ -73,4 +73,30 @@ public class CourseServiceTestSuite {
             verify(mockCourseRepository, times(0)).save(any());
         }
     }
+
+    @Test
+    public void deleteCourse_returnsTrue_givenValidCourseId() {
+        String validId = "0125";
+        when(mockCourseRepository.delete(any())).thenReturn(true);
+
+        boolean testResult = sut.deleteCourse(validId);
+
+        Assert.assertTrue("Successfully deleted course from database", testResult);
+        verify(mockCourseRepository, times(1)).delete(any());
+    }
+
+    @Test(expected = InvalidRequestException.class)
+    public void deleteCourse_throwsException_whenGivenInvalidCourseId() {
+        String invalidId1 = null;
+        String invalidId2 = "";
+        String invalidId3 = "   ";
+
+        try {
+            sut.deleteCourse(invalidId1);
+            sut.deleteCourse(invalidId2);
+            sut.deleteCourse(invalidId3);
+        } finally {
+            verify(mockCourseRepository, times(0)).delete(any());
+        }
+    }
 }

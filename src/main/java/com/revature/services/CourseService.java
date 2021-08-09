@@ -20,6 +20,9 @@ public class CourseService {
     }
 
     public boolean deleteCourse(String courseId) {
+        if (!isCourseIdValid(courseId)) {
+            throw new InvalidRequestException("Invalid course id provided");
+        }
         return courseRepository.delete(courseId);
     }
 
@@ -29,5 +32,9 @@ public class CourseService {
         if (course.getCourseName() == null || course.getCourseName().trim().equals("")) return false;
         if (course.getRegOpen() == null || course.getRegOpen().trim().equals("")) return false;
         return course.getRegOpen().trim().equals("Y") || course.getRegOpen().trim().equals("N");
+    }
+
+    public boolean isCourseIdValid(String courseId) {
+        return courseId != null && !courseId.trim().equals("");
     }
 }
