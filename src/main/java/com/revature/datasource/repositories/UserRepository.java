@@ -12,6 +12,7 @@ import com.revature.datasource.models.AppUser;
 import com.revature.datasource.utils.MongoClientFactory;
 import com.revature.utils.exceptions.DataSourceException;
 
+import com.revature.utils.exceptions.ResourcePersistenceException;
 import org.bson.Document;
 
 public class UserRepository implements CrudRepository<AppUser> {
@@ -37,6 +38,10 @@ public class UserRepository implements CrudRepository<AppUser> {
             MongoDatabase database = client.getDatabase("p0");
             MongoCollection<Document> collection = database.getCollection("users");
 
+            if (userExists(newUser.getUsername())) {
+                throw new ResourcePersistenceException("That username is already taken!");
+            }
+
             newUser.setUserType("student");
 
             Document newUserDoc = new Document("firstname", newUser.getFirstname())
@@ -45,10 +50,14 @@ public class UserRepository implements CrudRepository<AppUser> {
                     .append("password", newUser.getPassword())
                     .append("userType", newUser.getUserType());
 
+
             collection.insertOne(newUserDoc);
             newUser.setId(newUserDoc.get("_id").toString());
 
             return newUser;
+
+        } catch (ResourcePersistenceException e) {
+            throw new ResourcePersistenceException(e.getMessage());
 
         } catch (Exception e) {
             throw new DataSourceException("An unexpected error occurred", e);

@@ -10,7 +10,6 @@ public class AppUser {
     private String id;
     private String firstname;
     private String lastname;
-    private String email;
     private String username;
     private String password;
     private String userType;
@@ -19,16 +18,15 @@ public class AppUser {
         super();
     }
 
-    public AppUser(String firstname, String lastname, String email, String username, String password) {
+    public AppUser(String firstname, String lastname, String username, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
-        this.email = email;
         this.username = username;
         this.password = password;
     }
 
-    public AppUser(String id, String firstname, String lastname, String email, String username, String password, String userType) {
-        this(firstname, lastname, email, username, password);
+    public AppUser(String id, String firstname, String lastname, String username, String password, String userType) {
+        this(firstname, lastname, username, password);
         this.id = id;
         this.userType = userType;
     }
@@ -55,14 +53,6 @@ public class AppUser {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {
@@ -96,7 +86,6 @@ public class AppUser {
         AppUser appUser = (AppUser) o;
         return Objects.equals(id, appUser.id) && Objects.equals(firstname, appUser.firstname)
                 && Objects.equals(lastname, appUser.lastname)
-                && Objects.equals(email, appUser.email)
                 && Objects.equals(username, appUser.username)
                 && Objects.equals(password, appUser.password)
                 && Objects.equals(userType, appUser.userType);
@@ -104,7 +93,7 @@ public class AppUser {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstname, lastname, email, username, password, userType);
+        return Objects.hash(id, firstname, lastname, username, password, userType);
     }
 
     @Override
@@ -113,7 +102,6 @@ public class AppUser {
                 "id='" + id + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", userType='" + userType + '\'' +

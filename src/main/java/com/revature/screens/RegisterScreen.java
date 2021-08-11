@@ -26,18 +26,21 @@ public class RegisterScreen extends Screen {
         System.out.print("Last Name: ");
         String lastname = consoleReader.readLine();
 
-        System.out.print("Email: ");
-        String email = consoleReader.readLine();
-
         System.out.print("Username: ");
         String username = consoleReader.readLine();
 
         System.out.print("Password: ");
         String password = consoleReader.readLine();
 
-        AppUser newUser = new AppUser(firstname, lastname, email, username, password);
+        AppUser newUser = new AppUser(firstname, lastname, username, password);
 
-        userService.register(newUser);
+        try {
+            userService.register(newUser);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            System.out.println(e.getMessage());
+            System.out.println("Navigating back to welcome screen...");
+        }
 
         router.navigate("/welcome");
     }

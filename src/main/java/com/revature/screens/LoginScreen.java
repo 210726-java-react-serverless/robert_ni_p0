@@ -38,6 +38,7 @@ public class LoginScreen extends Screen {
             }
 
         } catch (AuthenticationException ae) {
+            logger.error("No user found with provided credentials");
             System.out.println("No user found with provided credentials");
             System.out.println("Navigating back to welcome screen...");
             router.navigate("/welcome");

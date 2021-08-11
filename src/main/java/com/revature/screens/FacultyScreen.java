@@ -61,7 +61,14 @@ public class FacultyScreen extends Screen {
                 System.out.print("Can students register for this class? (Y/N) > ");
                 registerOpen = consoleReader.readLine();
 
-                courseService.addCourse(new Course(courseId, courseName, courseDesc, registerOpen));
+                try {
+                    courseService.addCourse(new Course(courseId, courseName, courseDesc, registerOpen));
+                    System.out.println("The course \"" + courseName + "\" was successfully added!");
+                } catch (Exception e) {
+                    logger.error("An error occurred while attempting to add a course");
+                    System.out.println("An error occurred while attempting to add a course");
+                }
+
                 break;
             case "3":
                 System.out.print("Which course do you want to update? ");
@@ -94,11 +101,11 @@ public class FacultyScreen extends Screen {
                         courseService.updateCourse(courseId, updateContext);
                         break;
                     default:
+                        System.out.println("The option you selected is invalid!");
                 }
-
                 break;
             case "4":
-                System.out.print("Enter the course id of the course you wish to delete > ");
+                System.out.print("Enter the course id of the course you wish to delete: ");
                 courseId = consoleReader.readLine();
                 courseService.deleteCourse(courseId);
                 break;
@@ -107,7 +114,7 @@ public class FacultyScreen extends Screen {
                 router.navigate("/welcome");
                 break;
             default:
-                System.out.println("This is still a work in progress");
+                System.out.println("The option you selected is invalid!");
         }
     }
 }
