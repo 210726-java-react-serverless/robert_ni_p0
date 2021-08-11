@@ -5,6 +5,7 @@ import com.revature.datasource.models.Schedule;
 import com.revature.datasource.repositories.CourseRepository;
 import com.revature.datasource.repositories.ScheduleRepository;
 import com.revature.utils.exceptions.DataSourceException;
+import com.revature.utils.exceptions.InvalidRequestException;
 
 import java.util.List;
 
@@ -18,8 +19,11 @@ public class ScheduleService {
         this.courseRepository = courseRepository;
     }
 
-
     public Schedule register(String username, String id) {
+        if (username == null || username.trim().equals("") || id == null || id.trim().equals("")) {
+            throw new InvalidRequestException("Invalid course id provided");
+        }
+
         Course course = courseRepository.findById(id);
         Schedule schedule = scheduleRepository.findByUser(username, id);
 
@@ -35,6 +39,8 @@ public class ScheduleService {
     }
 
     public void getSchedule(String username) {
+        if (username == null || username.trim().equals("")) return;
+
         List<Schedule> schedules;
         try {
             schedules = scheduleRepository.getAllSchedules();
@@ -81,7 +87,7 @@ public class ScheduleService {
         }
     }
 
-    public void displayCourse(Course course) {
+    private void displayCourse(Course course) {
         System.out.println("Course ID: " + course.getCourseId() +
                 "\nCourse Name: " + course.getCourseName() +
                 "\nCourse Description: " + course.getCourseDesc()

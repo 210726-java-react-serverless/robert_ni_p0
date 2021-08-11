@@ -23,7 +23,7 @@ public class CourseService {
         return courseRepository.save(newCourse);
     }
 
-    public Course convertRegisterOpen(Course course) {
+    private Course convertRegisterOpen(Course course) {
         if (course.getRegisterOpen().equals("Y")) {
             course.setRegisterOpen("Yes");
         } else {
@@ -53,7 +53,7 @@ public class CourseService {
         return courseRepository.updateCourse(courseId, context);
     }
 
-    public boolean isCourseValid(Course course) {
+    private boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseId() == null || course.getCourseId().trim().equals("")) return false;
         if (course.getCourseName() == null || course.getCourseName().trim().equals("")) return false;
@@ -61,7 +61,7 @@ public class CourseService {
         return course.getRegisterOpen().trim().equals("Y") || course.getRegisterOpen().trim().equals("N");
     }
 
-    public boolean isCourseIdValid(String courseId) {
+    private boolean isCourseIdValid(String courseId) {
         return courseId != null && !courseId.trim().equals("");
     }
 }

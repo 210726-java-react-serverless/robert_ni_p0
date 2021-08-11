@@ -31,28 +31,6 @@ public class UserServiceTestSuite {
     }
 
     @Test
-    public void isUserValid_returnsTrue_givenValidUser() {
-        AppUser validUser = new AppUser("valid", "valid", "valid", "valid", "valid");
-        boolean testResult = sut.isUserValid(validUser);
-        Assert.assertTrue("Expected user to be considered valid", testResult);
-    }
-
-    @Test
-    public void isUserValid_returnsFalse_givenInvalidUser() {
-        AppUser invalidUser1 = new AppUser(null, "valid", "valid", "valid", "valid");
-        AppUser invalidUser2 = new AppUser("", "valid", "valid", "valid", "valid");
-        AppUser invalidUser3 = new AppUser("       ", "valid", "valid", "valid", "valid");
-
-        boolean testResult1 = sut.isUserValid(invalidUser1);
-        boolean testResult2 = sut.isUserValid(invalidUser2);
-        boolean testResult3 = sut.isUserValid(invalidUser3);
-
-        Assert.assertFalse("User first name can not be null", testResult1);
-        Assert.assertFalse("User first name can be not empty string", testResult2);
-        Assert.assertFalse("User first name can not be whitespaces", testResult3);
-    }
-
-    @Test
     public void register_returnsTrue_whenGivenValidUser() {
         AppUser expectedUser = new AppUser("valid", "valid", "valid", "valid", "valid");
         AppUser validUser = new AppUser("valid", "valid", "valid", "valid", "valid");

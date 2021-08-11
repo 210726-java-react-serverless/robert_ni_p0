@@ -43,7 +43,7 @@ public class UserService {
         return authUser;
     }
 
-    public boolean isUserValid(AppUser user) {
+    private boolean isUserValid(AppUser user) {
         if (user == null) return false;
         if (user.getFirstname() == null || user.getFirstname().trim().equals("")) return false;
         if (user.getLastname() == null || user.getLastname().trim().equals("")) return false;
