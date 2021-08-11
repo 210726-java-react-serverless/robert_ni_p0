@@ -40,7 +40,7 @@ public class WelcomeScreen extends Screen {
                 AppState.getAppState().stop();
                 break;
             default:
-                System.out.println("Invalid entry selected");
+                System.out.println("You entered an invalid entry");
         }
     }
 }

@@ -66,19 +66,14 @@ public class ScheduleService {
         if (username == null || username.trim().equals("")) return;
 
         List<Schedule> schedules;
-
-        try {
-            schedules = scheduleRepository.getAllSchedules();
-            for (Schedule schedule : schedules) {
-                if (schedule.getUsername().equals(username)) {
-                    System.out.print("ID: " + schedule.getCourseId() +
-                            " | Course: " + schedule.getCourseName() +
-                            " | Description: " + schedule.getCourseDesc() +
-                            "\n------------------------------------------------------------\n");
-                }
+        schedules = scheduleRepository.getAllSchedules();
+        for (Schedule schedule : schedules) {
+            if (schedule.getUsername().equals(username)) {
+                System.out.print(schedule.getCourseId() +
+                        " | Course: " + schedule.getCourseName() +
+                        " | Description: " + schedule.getCourseDesc() +
+                        "\n------------------------------------------------------------\n");
             }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
         }
     }
 

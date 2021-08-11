@@ -39,7 +39,15 @@ public class StudentScreen extends Screen {
 
         switch (userSelection) {
             case "1":
-                scheduleService.findOpenCourses();
+                System.out.print("1) View all courses\n2) View open courses\n> ");
+                switch (consoleReader.readLine()) {
+                    case "1":
+                        scheduleService.getAllCourses();
+                        break;
+                    case "2":
+                        scheduleService.findOpenCourses();
+                        break;
+                }
                 break;
             case "2":
                 System.out.println("\nSCHEDULE\n");
@@ -58,7 +66,7 @@ public class StudentScreen extends Screen {
                 router.navigate("/welcome");
                 break;
             default:
-                System.out.println("This is still a work in progress");
+                System.out.println("You entered an invalid entry");
         }
     }
 }

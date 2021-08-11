@@ -100,7 +100,7 @@ public class FacultyScreen extends Screen {
                         courseService.updateCourse(courseId, updateContext);
                         break;
                     default:
-                        System.out.println("The option you selected is invalid!");
+                        System.out.println("You entered an invalid entry");
                 }
                 break;
             case "4":
@@ -113,7 +113,7 @@ public class FacultyScreen extends Screen {
                 router.navigate("/welcome");
                 break;
             default:
-                System.out.println("The option you selected is invalid!");
+                System.out.println("You entered an invalid entry");
         }
     }
 }
