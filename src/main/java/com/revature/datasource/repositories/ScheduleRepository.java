@@ -113,6 +113,39 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
     }
 
     /**
+     * When a course is updated in the database, the course will also be modified inside
+     * the schedules
+     *
+     * @param courseId
+     * @param context
+     * @param newInfo
+     * @return
+     */
+    public boolean updateCourse(String courseId, String context, String newInfo) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("schedules1");
+
+            Document queryDoc = new Document("courseId", courseId);
+            Document returnDoc = collection.find(queryDoc).first();
+
+            if (returnDoc == null) {
+                return false;
+            }
+
+            Document newDoc = new Document(context, newInfo);
+            Document updateDoc = new Document("$set", newDoc);
+            collection.updateOne(returnDoc, updateDoc);
+
+            return true;
+
+        } catch (Exception e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
+    }
+
+    /**
      * Used to get all schedules from the datasource and adds it to an ArrayList.
      * After all schedules are added, return the ArrayList
      *

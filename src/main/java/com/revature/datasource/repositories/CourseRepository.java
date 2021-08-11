@@ -156,7 +156,6 @@ public class CourseRepository implements CrudRepository<Course> {
             return true;
 
         } catch (Exception e) {
-            e.printStackTrace();
             throw new DataSourceException("An unexpected error occurred", e);
         }
     }

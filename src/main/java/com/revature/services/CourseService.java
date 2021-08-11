@@ -74,7 +74,8 @@ public class CourseService {
         if (!isCourseIdValid(courseId)) {
             throw new InvalidRequestException("Invalid course id provided");
         }
-        return courseRepository.updateCourse(courseId, context, newInfo);
+        courseRepository.updateCourse(courseId, context, newInfo);
+        return scheduleRepository.updateCourse(courseId, context, newInfo);
     }
 
     /**
