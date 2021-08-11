@@ -57,13 +57,15 @@ public class CourseServiceTestSuite {
 
     @Test
     public void deleteCourse_returnsTrue_givenValidCourseId() {
-        String validId = "0125";
+        String validId = "valid";
         when(mockCourseRepository.delete(any())).thenReturn(true);
+        when(mockScheduleRepository.delete(any())).thenReturn(true);
 
         boolean testResult = sut.deleteCourse(validId);
 
         Assert.assertTrue("Successfully deleted course from database", testResult);
         verify(mockCourseRepository, times(1)).delete(any());
+        verify(mockScheduleRepository, times(1)).delete(any());
     }
 
     @Test(expected = InvalidRequestException.class)
