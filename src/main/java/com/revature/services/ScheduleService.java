@@ -32,8 +32,7 @@ public class ScheduleService {
         }
 
         Course course = courseRepository.findById(id);
-
-        if (course == null) {
+        if (course == null || course.getRegisterOpen().equals("No")) {
             return null;
         }
 
@@ -87,17 +86,13 @@ public class ScheduleService {
      * Finds all the courses in the datasource and displays it
      */
     public void getAllCourses() {
-        List<Course> courses;
-        try {
-            courses = courseRepository.findAllCourses();
-            for (Course course : courses) {
-                displayCourse(course);
-                System.out.print("Registration available? " + course.getRegisterOpen() +
-                        "\n------------------------------------------------------------\n"
-                );
-            }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
+        List<Course> courses = courseRepository.findAllCourses();
+        if (courses == null) return;
+        for (Course course : courses) {
+            displayCourse(course);
+            System.out.print("Registration available? " + course.getRegisterOpen() +
+                    "\n------------------------------------------------------------\n"
+            );
         }
     }
 
@@ -105,17 +100,13 @@ public class ScheduleService {
      * Finds all courses that students can register for and displays it
      */
     public void findOpenCourses() {
-        List<Course> courses;
-        try {
-            courses = courseRepository.findAllCourses();
-            for (Course course : courses) {
-                if (course.getRegisterOpen().equals("Yes")) {
-                    displayCourse(course);
-                    System.out.print("------------------------------------------------------------\n");
-                }
+        List<Course> courses = courseRepository.findAllCourses();
+        if (courses == null) return;
+        for (Course course : courses) {
+            if (course.getRegisterOpen().equals("Yes")) {
+                displayCourse(course);
+                System.out.print("------------------------------------------------------------\n");
             }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
         }
     }
 

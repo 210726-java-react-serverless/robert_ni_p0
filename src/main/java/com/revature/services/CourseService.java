@@ -2,6 +2,7 @@ package com.revature.services;
 
 import com.revature.datasource.models.Course;
 import com.revature.datasource.repositories.CourseRepository;
+import com.revature.datasource.repositories.ScheduleRepository;
 import com.revature.utils.exceptions.DataSourceException;
 import com.revature.utils.exceptions.InvalidRequestException;
 
@@ -10,9 +11,11 @@ import java.util.List;
 public class CourseService {
 
     private final CourseRepository courseRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    public CourseService(CourseRepository courseRepository) {
+    public CourseService(CourseRepository courseRepository, ScheduleRepository scheduleRepository) {
         this.courseRepository = courseRepository;
+        this.scheduleRepository = scheduleRepository;
     }
 
     /**
@@ -54,7 +57,8 @@ public class CourseService {
         if (!isCourseIdValid(courseId)) {
             throw new InvalidRequestException("Invalid course id provided");
         }
-        return courseRepository.delete(courseId);
+        courseRepository.delete(courseId);
+        return scheduleRepository.delete(courseId);
     }
 
     /**

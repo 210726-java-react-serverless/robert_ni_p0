@@ -57,13 +57,31 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
     }
 
     @Override
-    public boolean delete(String deleteSchedule) {
-        return false;
+    public boolean delete(String id) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("schedules");
+
+            Document queryDoc = new Document("courseId", id);
+
+            MongoCursor cursor = collection.find(queryDoc).iterator();
+            while (cursor.hasNext()) {
+                Document removeDoc = (Document) cursor.next();
+                collection.deleteOne(removeDoc);
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
     }
 
     /**
      * Takes in non-null Strings, copies them to a Document, and attempts to query the datasource
      * for the Document. If the query returns a Document, map its data to a Schedule and return it
+     *
      * @param username
      * @param id
      * @return

@@ -2,6 +2,7 @@ package com.revature.services;
 
 import com.revature.datasource.models.Course;
 import com.revature.datasource.repositories.CourseRepository;
+import com.revature.datasource.repositories.ScheduleRepository;
 import com.revature.utils.exceptions.InvalidRequestException;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,11 +17,13 @@ public class CourseServiceTestSuite {
     CourseService sut;
 
     private CourseRepository mockCourseRepository;
+    private ScheduleRepository mockScheduleRepository;
 
     @Before
     public void beforeEachTest() {
         mockCourseRepository = mock(CourseRepository.class);
-        sut = new CourseService(mockCourseRepository);
+        mockScheduleRepository = mock(ScheduleRepository.class);
+        sut = new CourseService(mockCourseRepository, mockScheduleRepository);
     }
 
     @After

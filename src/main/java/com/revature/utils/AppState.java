@@ -26,14 +26,13 @@ public class AppState {
 
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
+        UserRepository userRepository = new UserRepository();
         CourseRepository courseRepository = new CourseRepository();
-        CourseService courseService = new CourseService(courseRepository);
+        ScheduleRepository scheduleRepository = new ScheduleRepository();
 
         UserSession session = new UserSession();
-        UserRepository userRepository = new UserRepository();
         UserService userService = new UserService(userRepository, session);
-
-        ScheduleRepository scheduleRepository = new ScheduleRepository();
+        CourseService courseService = new CourseService(courseRepository, scheduleRepository);
         ScheduleService scheduleService = new ScheduleService(scheduleRepository, courseRepository);
 
         router.addScreen(new WelcomeScreen(consoleReader, router))

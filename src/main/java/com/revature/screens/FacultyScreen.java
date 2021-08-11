@@ -63,7 +63,6 @@ public class FacultyScreen extends Screen {
 
                 try {
                     courseService.addCourse(new Course(courseId, courseName, courseDesc, registerOpen));
-                    System.out.println("The course \"" + courseName + "\" was successfully added!");
                 } catch (Exception e) {
                     logger.error("An error occurred while attempting to add a course");
                     System.out.println("An error occurred while attempting to add a course");

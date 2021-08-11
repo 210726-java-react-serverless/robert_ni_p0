@@ -15,6 +15,8 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class CourseRepository implements CrudRepository<Course> {
 
     /**
@@ -70,6 +72,12 @@ public class CourseRepository implements CrudRepository<Course> {
                     .append("courseName", newCourse.getCourseName())
                     .append("courseDesc", newCourse.getCourseDesc())
                     .append("registerOpen", newCourse.getRegisterOpen());
+
+            Document returnDoc = collection.find(eq("courseId", newCourse.getCourseId())).first();
+
+            if (returnDoc != null) {
+                return null;
+            }
 
             collection.insertOne(newCourseDoc);
 
