@@ -81,4 +81,20 @@ public class ScheduleServiceTestSuite {
             verify(mockScheduleRepository, times(0)).save(any());
         }
     }
+
+    @Test
+    public void deleteSchedule_returnsTrue_givenValidInput() {
+        when(mockScheduleRepository.deleteSchedule(any(), any())).thenReturn(true);
+        boolean testResult = sut.deleteSchedule("valid", "valid");
+        Assert.assertTrue(testResult);
+        verify(mockScheduleRepository, times(1)).deleteSchedule(any(), any());
+    }
+
+    @Test
+    public void deleteSchedule_returnsFalse_givenInvalidInput() {
+        when(mockScheduleRepository.deleteSchedule(any(), any())).thenReturn(false);
+        boolean testResult = sut.deleteSchedule("valid", "invalid");
+        Assert.assertFalse(testResult);
+        verify(mockScheduleRepository, times(1)).deleteSchedule(any(), any());
+    }
 }

@@ -4,7 +4,9 @@ import com.revature.datasource.models.AppUser;
 import com.revature.datasource.repositories.UserRepository;
 import com.revature.utils.UserSession;
 import com.revature.utils.exceptions.AuthenticationException;
+import com.revature.utils.exceptions.DataSourceException;
 import com.revature.utils.exceptions.InvalidRequestException;
+import com.revature.utils.exceptions.ResourcePersistenceException;
 
 public class UserService {
 
