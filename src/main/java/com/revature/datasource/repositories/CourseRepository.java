@@ -17,6 +17,13 @@ import java.util.List;
 
 public class CourseRepository implements CrudRepository<Course> {
 
+    /**
+     * Takes a non-null String id to query the datasource. If the query returns a Document, map it
+     * to a Course object and return it.
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Course findById(String id) {
         try {
@@ -38,13 +45,20 @@ public class CourseRepository implements CrudRepository<Course> {
             return course;
 
         } catch (JsonMappingException e) {
-            throw new DataSourceException("An unexpected error occurred", e);
+            throw new DataSourceException("An exception occurred while mapping the document", e);
 
         } catch (JsonProcessingException e) {
             throw new DataSourceException("An unexpected error occurred", e);
         }
     }
 
+    /**
+     * Takes a non-null Course object, puts its data into a Document, and attempts to persist it
+     * to the database.
+     *
+     * @param newCourse
+     * @return
+     */
     @Override
     public Course save(Course newCourse) {
         try {
@@ -73,6 +87,13 @@ public class CourseRepository implements CrudRepository<Course> {
         return null;
     }
 
+    /**
+     * Takes a non-null String id, searches for it in the database, and attempts to delete
+     * it from the database.
+     *
+     * @param courseId
+     * @return
+     */
     @Override
     public boolean delete(String courseId) {
         try {
@@ -96,6 +117,17 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    /**
+     * Takes multiple non-null Strings and attempts to find it in the database.
+     * If the query returns no results, then there is no course to update. If the
+     * query returns a Course, then update it with new information, and attempt to
+     * persist it to the database.
+     *
+     * @param courseId
+     * @param context
+     * @param newInfo
+     * @return
+     */
     public boolean updateCourse(String courseId, String context, String newInfo) {
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
@@ -117,10 +149,19 @@ public class CourseRepository implements CrudRepository<Course> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DataSourceException("An exception occurred while mapping the document", e);
+            throw new DataSourceException("An unexpected error occurred", e);
         }
     }
 
+    /**
+     * Takes a non-null course id and uses it to query the database. If query returns
+     * a result, then switches the registerOpen field from 'Yes' to 'No' and vice versa before
+     * attempting to persist it to the database.
+     *
+     * @param courseId
+     * @param context
+     * @return
+     */
     public boolean updateCourse(String courseId, String context) {
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
@@ -150,10 +191,16 @@ public class CourseRepository implements CrudRepository<Course> {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new DataSourceException("An exception occurred while mapping the document", e);
+            throw new DataSourceException("An unexpected error occurred", e);
         }
     }
 
+    /**
+     * Used to get all courses from the datasource and adds it to an ArrayList.
+     * After all courses are added, return the ArrayList
+     *
+     * @return
+     */
     public List<Course> findAllCourses() {
         List<Course> courses = new ArrayList<>();
 
