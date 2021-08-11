@@ -17,7 +17,7 @@ import org.bson.Document;
 public class UserRepository implements CrudRepository<AppUser> {
 
     @Override
-    public AppUser findById(int id) {
+    public AppUser findById(String id) {
         return null;
     }
 

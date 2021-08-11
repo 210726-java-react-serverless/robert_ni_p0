@@ -18,13 +18,35 @@ import java.util.List;
 public class CourseRepository implements CrudRepository<Course> {
 
     @Override
-    public Course findById(int id) {
-        return null;
+    public Course findById(String id) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("courses");
+
+            Document queryDoc = new Document("courseId", id);
+            Document returnDoc = collection.find(queryDoc).first();
+
+            if (returnDoc == null) {
+                return null;
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            Course course = mapper.readValue(returnDoc.toJson(), Course.class);
+            course.setId(returnDoc.get("_id").toString());
+
+            return course;
+
+        } catch (JsonMappingException e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+
+        } catch (JsonProcessingException e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
     }
 
     @Override
     public Course save(Course newCourse) {
-
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
             MongoDatabase database = client.getDatabase("p0");
@@ -83,7 +105,6 @@ public class CourseRepository implements CrudRepository<Course> {
             MongoCollection<Document> collection = database.getCollection("courses");
 
             MongoCursor cursor = collection.find().iterator();
-
             ObjectMapper mapper = new ObjectMapper();
 
             while (cursor.hasNext()) {

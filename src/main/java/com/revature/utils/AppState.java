@@ -1,9 +1,11 @@
 package com.revature.utils;
 
 import com.revature.datasource.repositories.CourseRepository;
+import com.revature.datasource.repositories.ScheduleRepository;
 import com.revature.datasource.repositories.UserRepository;
 import com.revature.screens.*;
 import com.revature.services.CourseService;
+import com.revature.services.ScheduleService;
 import com.revature.services.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,11 +33,14 @@ public class AppState {
         UserRepository userRepository = new UserRepository();
         UserService userService = new UserService(userRepository, session);
 
+        ScheduleRepository scheduleRepository = new ScheduleRepository();
+        ScheduleService scheduleService = new ScheduleService(scheduleRepository, courseRepository);
+
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader, router, logger, userService))
                 .addScreen(new RegisterScreen(consoleReader, router, logger, userService))
-                .addScreen(new StudentScreen(consoleReader, router, logger, userService, courseService))
-                .addScreen(new FacultyScreen(consoleReader, router, logger, userService, courseService));
+                .addScreen(new StudentScreen(consoleReader, router, logger, userService, courseService, scheduleService))
+                .addScreen(new FacultyScreen(consoleReader, router, logger, userService, courseService, scheduleService));
     }
 
     public static AppState getAppState() {

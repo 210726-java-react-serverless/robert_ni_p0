@@ -39,57 +39,6 @@ public class CourseService {
         return courseRepository.delete(courseId);
     }
 
-    public void getAllCourses() {
-        List<Course> courses;
-        try {
-            courses = courseRepository.findAllCourses();
-            for (Course course : courses) {
-                displayCourse(course);
-                System.out.print("Registration available? " + course.getRegisterOpen() +
-                        "\n------------------------------------------------------------\n"
-                );
-            }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
-        }
-    }
-    public void findOpenCourses() {
-        List<Course> courses;
-        try {
-            courses = courseRepository.findAllCourses();
-            for (Course course : courses) {
-                if (course.getRegisterOpen().equals("Yes")) {
-                    displayCourse(course);
-                    System.out.print("\n------------------------------------------------------------\n");
-                }
-            }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
-        }
-    }
-
-    public void findClosedCourses() {
-        List<Course> courses;
-        try {
-            courses = courseRepository.findAllCourses();
-            for (Course course : courses) {
-                if (course.getRegisterOpen().equals("No")) {
-                    displayCourse(course);
-                    System.out.print("\n------------------------------------------------------------\n");
-                }
-            }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
-        }
-    }
-
-    public void displayCourse(Course course) {
-        System.out.println("Course ID: " + course.getCourseId() +
-                "\nCourse Name: " + course.getCourseName() +
-                "\nCourse Description: " + course.getCourseDesc()
-        );
-    }
-
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseId() == null || course.getCourseId().trim().equals("")) return false;

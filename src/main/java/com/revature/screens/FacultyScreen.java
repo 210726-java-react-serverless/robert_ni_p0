@@ -2,6 +2,7 @@ package com.revature.screens;
 
 import com.revature.datasource.models.Course;
 import com.revature.services.CourseService;
+import com.revature.services.ScheduleService;
 import com.revature.services.UserService;
 import com.revature.utils.ScreenRouter;
 import org.apache.logging.log4j.Logger;
@@ -13,12 +14,14 @@ public class FacultyScreen extends Screen {
     private final Logger logger;
     private final UserService userService;
     private final CourseService courseService;
+    private final ScheduleService scheduleService;
 
-    public FacultyScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger, UserService userService, CourseService courseService) {
+    public FacultyScreen(BufferedReader consoleReader, ScreenRouter router, Logger logger, UserService userService, CourseService courseService, ScheduleService scheduleService) {
         super("FacultyScreen", "/faculty", consoleReader, router);
         this.logger = logger;
         this.userService = userService;
         this.courseService = courseService;
+        this.scheduleService = scheduleService;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class FacultyScreen extends Screen {
 
         switch (userSelection) {
             case "1":
-                courseService.getAllCourses();
+                scheduleService.getAllCourses();
                 break;
             case "2":
                 System.out.print("Enter a course id > ");
