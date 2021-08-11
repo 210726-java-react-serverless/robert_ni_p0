@@ -21,8 +21,16 @@ public class UserRepository implements CrudRepository<AppUser> {
         return null;
     }
 
+    /**
+     * Takes in non-null AppUser, copy data from AppUser to Document, and attempt to
+     * persist the Document to the datasource.
+     *
+     * @param newUser
+     * @return
+     */
     @Override
     public AppUser save(AppUser newUser) {
+        newUser.setUsername(newUser.getUsername().toLowerCase());
 
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
@@ -33,7 +41,6 @@ public class UserRepository implements CrudRepository<AppUser> {
 
             Document newUserDoc = new Document("firstname", newUser.getFirstname())
                     .append("lastname", newUser.getLastname())
-                    .append("email", newUser.getEmail())
                     .append("username", newUser.getUsername())
                     .append("password", newUser.getPassword())
                     .append("userType", newUser.getUserType());
@@ -58,8 +65,16 @@ public class UserRepository implements CrudRepository<AppUser> {
         return false;
     }
 
+    /**
+     * Takes in non-null Strings and uses them to query the database.
+     * If a result is returned, get the Document, map its fields to an AppUser,
+     * and return the AppUser
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     public AppUser findUserByCredentials(String username, String password) {
-
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
             MongoDatabase database = client.getDatabase("p0");
@@ -79,11 +94,32 @@ public class UserRepository implements CrudRepository<AppUser> {
             return authUser;
 
         } catch (JsonMappingException e) {
-            System.out.println(e.getMessage()); // TODO logger
             throw new DataSourceException("An exception occurred while mapping the document", e);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage()); // TODO logger
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
+    }
+
+    /**
+     * Takes a non-null String, searches the datasource for the name,
+     * and returns false if the user is not in datasource
+     *
+     * @param username
+     * @return
+     */
+    public boolean userExists(String username) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("users");
+
+            Document queryDoc = new Document("username", username);
+            Document returnDoc = collection.find(queryDoc).first();
+
+            return returnDoc != null;
+
+        } catch (Exception e) {
             throw new DataSourceException("An unexpected error occurred", e);
         }
     }

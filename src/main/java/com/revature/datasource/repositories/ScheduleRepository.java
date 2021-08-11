@@ -22,6 +22,13 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
         return null;
     }
 
+    /**
+     * Takes a non-null Schedule, copies its data to a Document, and attempts to persist it
+     * to the datasource
+     *
+     * @param newSchedule
+     * @return
+     */
     @Override
     public Schedule save(Schedule newSchedule) {
         try {
@@ -54,6 +61,13 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
         return false;
     }
 
+    /**
+     * Takes in non-null Strings, copies them to a Document, and attempts to query the datasource
+     * for the Document. If the query returns a Document, map its data to a Schedule and return it
+     * @param username
+     * @param id
+     * @return
+     */
     public Schedule findByUser(String username, String id) {
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
@@ -80,6 +94,12 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
         }
     }
 
+    /**
+     * Used to get all schedules from the datasource and adds it to an ArrayList.
+     * After all schedules are added, return the ArrayList
+     *
+     * @return
+     */
     public List<Schedule> getAllSchedules() {
         List<Schedule> schedules = new ArrayList<>();
 
@@ -110,6 +130,14 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
         }
     }
 
+    /**
+     * Takes in non-null Strings, uses them to search the datasource, and
+     * if a result is returned, attempt to remove it from the datasource
+     *
+     * @param username
+     * @param courseId
+     * @return
+     */
     public boolean deleteSchedule(String username, String courseId) {
         try {
             MongoClient client = MongoClientFactory.getInstance().getClient();
