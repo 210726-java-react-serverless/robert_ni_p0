@@ -39,15 +39,7 @@ public class StudentScreen extends Screen {
 
         switch (userSelection) {
             case "1":
-                System.out.print("1) View all courses\n2) View open courses\n> ");
-                switch (consoleReader.readLine()) {
-                    case "1":
-                        scheduleService.getAllCourses();
-                        break;
-                    case "2":
-                        scheduleService.findOpenCourses();
-                        break;
-                }
+                scheduleService.findOpenCourses();
                 break;
             case "2":
                 System.out.println("\nSCHEDULE\n");
