@@ -50,7 +50,8 @@ public class StudentScreen extends Screen {
                 scheduleService.register(userService.getSession().getCurrentUser().getUsername(), consoleReader.readLine());
                 break;
             case "4":
-                System.out.println("Un-enroll from a course");
+                System.out.print("Enter the id of the course to unregister: ");
+                scheduleService.deleteSchedule(userService.getSession().getCurrentUser().getUsername(), consoleReader.readLine());
                 break;
             case "5":
                 userService.getSession().closeSession();

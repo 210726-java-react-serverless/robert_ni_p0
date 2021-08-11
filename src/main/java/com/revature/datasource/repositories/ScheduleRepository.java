@@ -109,4 +109,27 @@ public class ScheduleRepository implements CrudRepository<Schedule> {
             throw new DataSourceException("An unexpected error occurred", e);
         }
     }
+
+    public boolean deleteSchedule(String username, String courseId) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("schedules");
+
+            Document queryDoc = new Document("username", username)
+                    .append("courseId", courseId);
+            Document removeDoc = collection.find(queryDoc).first();
+
+            if (removeDoc == null) {
+                return false;
+            }
+
+            collection.deleteOne(removeDoc);
+
+            return true;
+            
+        } catch (Exception e) {
+            throw new DataSourceException("An unexpected error occurred", e);
+        }
+    }
 }

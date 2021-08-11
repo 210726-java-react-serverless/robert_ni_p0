@@ -30,6 +30,10 @@ public class ScheduleService {
         return scheduleRepository.save(new Schedule(username, course.getCourseId(), course.getCourseName(), course.getCourseDesc()));
     }
 
+    public boolean deleteSchedule(String username, String id) {
+        return scheduleRepository.deleteSchedule(username, id);
+    }
+
     public void getSchedule(String username) {
         List<Schedule> schedules;
         try {
@@ -68,21 +72,6 @@ public class ScheduleService {
             courses = courseRepository.findAllCourses();
             for (Course course : courses) {
                 if (course.getRegisterOpen().equals("Yes")) {
-                    displayCourse(course);
-                    System.out.print("------------------------------------------------------------\n");
-                }
-            }
-        } catch (Exception e) {
-            throw new DataSourceException("An unexpected error occurred", e);
-        }
-    }
-
-    public void findClosedCourses() {
-        List<Course> courses;
-        try {
-            courses = courseRepository.findAllCourses();
-            for (Course course : courses) {
-                if (course.getRegisterOpen().equals("No")) {
                     displayCourse(course);
                     System.out.print("------------------------------------------------------------\n");
                 }
