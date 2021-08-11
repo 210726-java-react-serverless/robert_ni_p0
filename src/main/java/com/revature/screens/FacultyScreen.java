@@ -64,7 +64,38 @@ public class FacultyScreen extends Screen {
                 courseService.addCourse(new Course(courseId, courseName, courseDesc, registerOpen));
                 break;
             case "3":
-                System.out.println("Update a course");
+                System.out.print("Which course do you want to update? ");
+                courseId = consoleReader.readLine();
+
+
+                System.out.print("What do you want to update?\n" +
+                        "1) Name\n" +
+                        "2) Description\n" +
+                        "3) Open/Close Registration\n" +
+                        "> "
+                );
+                String updateContext = consoleReader.readLine();
+                String newInfo;
+                switch (updateContext) {
+                    case "1":
+                        updateContext = "courseName";
+                        System.out.print("Enter the updated information\n> ");
+                        newInfo = consoleReader.readLine();
+                        courseService.updateCourse(courseId, updateContext, newInfo);
+                        break;
+                    case "2":
+                        updateContext = "courseDesc";
+                        System.out.print("Enter the updated information\n> ");
+                        newInfo = consoleReader.readLine();
+                        courseService.updateCourse(courseId, updateContext, newInfo);
+                        break;
+                    case "3":
+                        updateContext = "registerOpen";
+                        courseService.updateCourse(courseId, updateContext);
+                        break;
+                    default:
+                }
+
                 break;
             case "4":
                 System.out.print("Enter the course id of the course you wish to delete > ");

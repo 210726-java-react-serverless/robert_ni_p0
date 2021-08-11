@@ -40,9 +40,9 @@ public class ScheduleService {
             schedules = scheduleRepository.getAllSchedules();
             for (Schedule schedule : schedules) {
                 if (schedule.getUsername().equals(username)) {
-                    System.out.print("ID > " + schedule.getCourseId() +
-                            " | Course > " + schedule.getCourseName() +
-                            " | Description > " + schedule.getCourseDesc() +
+                    System.out.print("ID: " + schedule.getCourseId() +
+                            " | Course: " + schedule.getCourseName() +
+                            " | Description: " + schedule.getCourseDesc() +
                             "\n------------------------------------------------------------\n");
                 }
             }
@@ -58,7 +58,7 @@ public class ScheduleService {
             for (Course course : courses) {
                 displayCourse(course);
                 System.out.print("Registration available? " + course.getRegisterOpen() +
-                        "------------------------------------------------------------\n"
+                        "\n------------------------------------------------------------\n"
                 );
             }
         } catch (Exception e) {

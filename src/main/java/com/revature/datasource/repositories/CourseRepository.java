@@ -96,6 +96,64 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    public boolean updateCourse(String courseId, String context, String newInfo) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("courses");
+
+            Document queryDoc = new Document("courseId", courseId);
+            Document returnDoc = collection.find(queryDoc).first(); // returns the new doc
+
+            if (returnDoc == null) {
+                return false;
+            }
+
+            Document newDoc = new Document(context, newInfo);
+            Document updateDoc = new Document("$set", newDoc);
+            collection.updateOne(returnDoc, updateDoc);
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("An exception occurred while mapping the document", e);
+        }
+    }
+
+    public boolean updateCourse(String courseId, String context) {
+        try {
+            MongoClient client = MongoClientFactory.getInstance().getClient();
+            MongoDatabase database = client.getDatabase("p0");
+            MongoCollection<Document> collection = database.getCollection("courses");
+
+            Document queryDoc = new Document("courseId", courseId);
+            Document returnDoc = collection.find(queryDoc).first(); // returns the new doc
+
+            if (returnDoc == null) {
+                return false;
+            }
+
+            String currentContext = returnDoc.get("registerOpen").toString();
+
+            if (currentContext.equals("Yes")) {
+                Document newDoc = new Document(context, "No");
+                Document updateDoc = new Document("$set", newDoc);
+                collection.updateOne(returnDoc, updateDoc);
+            } else {
+                Document newDoc = new Document(context, "Yes");
+                Document updateDoc = new Document("$set", newDoc);
+                collection.updateOne(returnDoc, updateDoc);
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("An exception occurred while mapping the document", e);
+        }
+    }
+
     public List<Course> findAllCourses() {
         List<Course> courses = new ArrayList<>();
 

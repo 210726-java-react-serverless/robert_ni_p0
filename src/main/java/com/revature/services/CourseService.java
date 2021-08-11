@@ -39,6 +39,20 @@ public class CourseService {
         return courseRepository.delete(courseId);
     }
 
+    public boolean updateCourse(String courseId, String context, String newInfo) {
+        if (!isCourseIdValid(courseId)) {
+            throw new InvalidRequestException("Invalid course id provided");
+        }
+        return courseRepository.updateCourse(courseId, context, newInfo);
+    }
+
+    public boolean updateCourse(String courseId, String context) {
+        if (!isCourseIdValid(courseId)) {
+            throw new InvalidRequestException("Invalid course id provided");
+        }
+        return courseRepository.updateCourse(courseId, context);
+    }
+
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseId() == null || course.getCourseId().trim().equals("")) return false;
