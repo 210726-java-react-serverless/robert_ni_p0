@@ -2,25 +2,17 @@ package com.revature.services;
 
 import com.revature.datasource.models.AppUser;
 import com.revature.datasource.repositories.UserRepository;
-import com.revature.utils.UserSession;
 import com.revature.utils.exceptions.AuthenticationException;
-import com.revature.utils.exceptions.DataSourceException;
 import com.revature.utils.exceptions.InvalidRequestException;
-import com.revature.utils.exceptions.ResourcePersistenceException;
 
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserSession session;
 
-    public UserService(UserRepository userRepository, UserSession session) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.session = session;
     }
 
-    public UserSession getSession() {
-        return session;
-    }
 
     /**
      * Takes a non-null AppUser, validates its fields, and attempts to persist it to the datasource.
@@ -53,8 +45,6 @@ public class UserService {
         if (authUser == null) {
             throw new AuthenticationException("Invalid credentials provided");
         }
-
-        session.setCurrentUser(authUser);
 
         return authUser;
     }

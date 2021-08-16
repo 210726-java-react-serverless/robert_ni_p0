@@ -2,11 +2,8 @@ package com.revature.services;
 
 import com.revature.datasource.models.AppUser;
 import com.revature.datasource.repositories.UserRepository;
-import com.revature.utils.UserSession;
 import com.revature.utils.exceptions.AuthenticationException;
-import com.revature.utils.exceptions.DataSourceException;
 import com.revature.utils.exceptions.InvalidRequestException;
-import com.revature.utils.exceptions.ResourcePersistenceException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,14 +15,12 @@ public class UserServiceTestSuite {
 
     UserService sut;
 
-    private UserSession mockUserSession;
     private UserRepository mockUserRepository;
 
     @Before
     public void beforeEachTest() {
-        mockUserSession = mock(UserSession.class);
         mockUserRepository = mock(UserRepository.class);
-        sut = new UserService(mockUserRepository, mockUserSession);
+        sut = new UserService(mockUserRepository);
     }
 
     @After

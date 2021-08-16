@@ -24,8 +24,8 @@ public class MongoClientFactory {
         Properties props = new Properties();
 
         try {
-            props.load(new FileReader("src/main/resources/application.properties"));
-
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            props.load(loader.getResourceAsStream("application.properties"));
             String ipAddress = props.getProperty("ipAddress");
             int port = Integer.parseInt(props.getProperty("port"));
             String username = props.getProperty("username");
@@ -43,9 +43,6 @@ public class MongoClientFactory {
                     .build();
 
             client = MongoClients.create(settings);
-
-        } catch (FileNotFoundException e) {
-            throw new DataSourceException("Unable to load property file", e);
 
         } catch (IOException e) {
             throw new DataSourceException("Unexpected error occurred", e);
